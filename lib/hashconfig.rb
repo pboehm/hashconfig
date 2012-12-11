@@ -1,4 +1,5 @@
 require "hashconfig/version"
+require 'hash_deep_merge'
 require 'yaml'
 
 module Hashconfig
@@ -22,7 +23,7 @@ module Hashconfig
       persistent_config = YAML.load(File.new(yaml_file, "rb").read)
       persistent_config = Hash.new unless persistent_config.is_a? Hash
 
-      config = self.merge(persistent_config)
+      config = self.deep_merge(persistent_config)
       File.open(yaml_file, 'w') {|f| f.write(config.to_yaml) }
 
       return config
